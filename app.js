@@ -280,7 +280,7 @@ const html = `
             fithEle.style.display = 'none'
             sixthEle.style.display = 'none'
             seventhEle.style.display = 'none'
-            const res = await fetch ('http://localhost:4888/gpt', {
+            const res = await fetch ('https://gpt-bot-da7p.onrender.com/gpt', {
                method: 'POST',
                headers : {
                     'Content-Type': 'application/json'
