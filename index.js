@@ -37,7 +37,7 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} and ready to receive requests.`);
 })
 
-const html = (`
+const html = `
 
 <!DOCTYPE html>
 <html>
@@ -215,7 +215,7 @@ const html = (`
         <section id="recommendations">
         </section>
         <section id="try-again">
-            <a href="http://localhost:4888/">
+            <a href="https://gpt-bot-akka.onrender.com">
                 <button class="try-button"><b>Start again</b></button>
             </a> 
         </section>
@@ -280,7 +280,7 @@ const html = (`
             fithEle.style.display = 'none'
             sixthEle.style.display = 'none'
             seventhEle.style.display = 'none'
-            const res = await fetch ('https://gpt-bot-da7p.onrender.com/gpt', {
+            const res = await fetch ('https://gpt-bot-akka.onrender.com/gpt', {
                method: 'POST',
                headers : {
                     'Content-Type': 'application/json'
