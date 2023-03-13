@@ -37,7 +37,7 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} and ready to receive requests.`);
 })
 
-const html = `
+const html = (`
 
 <!DOCTYPE html>
 <html>
@@ -272,7 +272,7 @@ const html = `
 
 
     async function generateAnswer(){
-        let request = `Hi chat, could you please correct the following email: "${emails}". Please make it sound more ${tones} and correct the grammar, spelling and style so it sounds like something a customer service agent might write, thanks!`
+        let request = "Hi chat, could you please correct the following email: \"${emails}\". Please make it sound more ${tones} and correct the grammar, spelling and style so it sounds like something a customer service agent might write, thanks!"
         console.log(request)
         try {
             secondEle.style.display = 'none'
@@ -291,7 +291,7 @@ const html = `
 
             const { response } = await res.json()
             thirdEle.style.display = 'none'
-            fourthEle.innerHTML = `<p>${response}</p>`;
+            fourthEle.innerHTML = <p>${response}</p>;
             fourthEle.style.display = 'flex'
             fithEle.style.display = 'flex'
             sixthEle.style.display = 'flex'
