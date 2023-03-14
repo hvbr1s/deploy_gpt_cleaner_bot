@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Halt!&#129497;&#8205;&#9794;</title>
+  <style>
+
+      body {
+            font-family: "Open Sans", sans-serif;
+            background-color: #0d0d0d;
+            color: white;
+            padding: 12px;
+          }
+
+      button {
+
+      text-align: left;
+      background: rgb(210, 207, 210);
+      color: rgb(7, 7, 7);         
+      cursor: pointer;
+      border: 1px solid rgb(7, 7, 7);
+      border-radius: 5px;
+      padding: 8px 16px;
+      }
+
+      button:hover {
+
+      background: orange;
+      border: 1px solid white;
+      }
+
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+<body>
+  <p>Welcome <span id="wallet-address"></span></p>
+  <button id="connectWallet"><b>Connect</b></button>
+  <button id="chat"><b>Take me to chat</b></button>
+
+  <div id="display"></div>
+
+  <script type="text/javascript">
+    
+    var account = null;
+
+    const connect = async () => {
+      if (window.ethereum) {
+        await window.ethereum.send('eth_requestAccounts');
+        window.web3 = new Web3(window.ethereum);
+
+        var accounts = await web3.eth.getAccounts();
+        account = accounts[0];
+        document.getElementById('wallet-address').textContent = account;
+        document.getElementById('chat').onclick = startChat
+      }
+    }
+
+    const startChat = async () => {
+      var signature = await web3.eth.personal.sign("Access to chat bot", account)
+      fetch('/auth?signature=' + signature)
+      .then(function(response) {
+      })
+      .then(function() {
+      window.location.href = 'https://gpt-cleaner-bot.onrender.com/gpt';
+      })   
+    }
+
+    document.getElementById('connectWallet').onclick = connect
+
+  </script>
+</body>
+</html>
