@@ -14,7 +14,8 @@ const openai = new OpenAIApi(configuration);
 const app = express();
 
 app.use(express.json()) 
-app.use(express.static('./public/index.html'))
+app.use(express.static('public'))
+
 
 app.post("/gpt", async (req, res)=> {
 
