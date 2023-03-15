@@ -63,8 +63,15 @@
       })
       .then(function() {
       window.location.href = 'https://gpt-cleaner-bot.onrender.com/gpt';
-      })   
+      }) 
+    };
+
+    function showError(message) {
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.textContent = message;
+      errorMessage.style.display = "block";
     }
+
 
     document.getElementById('connectWallet').onclick = connect
 
