@@ -51,7 +51,8 @@
 
         var accounts = await web3.eth.getAccounts();
         account = accounts[0];
-        document.getElementById('wallet-address').textContent = account;
+        const formattedAddress = `${account?.slice(0, 6)}...${account?.slice(-4)}`;
+        document.getElementById('wallet-address').textContent = formattedAddress;
         document.getElementById('chat').onclick = startChat
       }
     }
