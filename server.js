@@ -1,6 +1,8 @@
 import { createRequire } from "module"
+import { v4 as uuidv4 } from "uuid";
 const require = createRequire(import.meta.url)
 require('dotenv').config()
+import cookieParser from 'cookie-parser';
 import path from 'path';
 const __dirname = path.resolve();
 const Web3 = require('web3')
@@ -21,6 +23,7 @@ const app = express();
 const web3 = new Web3("https://rpc.flashbots.net/")
 
 // middleware
+app.use(cookieParser());
 app.use(express.json()) 
 
 let authenticated = null
@@ -38,23 +41,24 @@ app.get('/auth', async (req, res,) =>{
     console.log("Balance is ", balance)
   
     if (balance > 0) {
-      authenticated = true
-      res.redirect('https://gpt-cleaner-bot.onrender.com/gpt')
-    }      
-    else {
-      res.send(`You don't have the required NFT!`)
-    }
+      const token = uuidv4();
+      res.cookie("authToken", token, { httpOnly: true, secure: true, sameSite: "strict" });
+      res.redirect("https://gpt-cleaner-bot.onrender.com/gpt")
+    } else {
+      res.send(`You don't have the required NFT!`);
+    }    
 
 })
 
-app.get('/gpt', (req, res) => {
-  if (authenticated === true) {
-    res.sendFile(path.join(__dirname, 'public/index.html'))
+app.get("/gpt", (req, res) => {
+  const authToken = req.cookies.authToken;
+  if (authToken) {
+    res.sendFile(path.join(__dirname, "public/index.html"));
+  } else {
+    res.redirect("https://gpt-cleaner-bot.onrender.com");
   }
-  else{
-    res.redirect('https://gpt-cleaner-bot.onrender.com/')
-  }
-})
+});
+
 
 app.post("/chat", async (req, res)=> {
 
