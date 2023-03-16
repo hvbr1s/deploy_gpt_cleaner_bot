@@ -90,26 +90,30 @@
 
         button {
 
-            text-align: center;
-            background: plum;
-            color: white;         
-            cursor: pointer;
-            border: 1px solid white;
-            border-radius: 5px;
-            padding: 8px 16px;
+        text-align: center;
+        background: rgb(210, 207, 210);
+        color: rgb(7, 7, 7);         
+        cursor: pointer;
+        border: 2px solid rgb(7, 7, 7);
+        border-radius: 5px;
+        padding: 8px 16px;
+        box-shadow: 2px 2px 0 0 black,
+        4px 4px 0 0 white;
+        transition-duration: 200ms;
+
         }
 
         button:hover {
 
-            background: transparent;
-            border: 1px solid white;
+        box-shadow: 3px 3px black, 6px 6px 0 0 white;
+        transform: translate(-2px, 2px);
         }
 
         .try-button {
 
             text-align: center;
-            background: rgb(101, 190, 242);
-            color: white;         
+            background: rgb(132, 136, 123);
+            color: black;         
             cursor: pointer;
             border: 1px solid white;
             border-radius: 5px;
@@ -126,7 +130,7 @@
         span {
 
         text-align: center;
-        background: plum;
+        background: rgb(105, 167, 201);
         color: white;         
         cursor: pointer;
         border: 1px solid white;
@@ -174,7 +178,7 @@
         <section id="recommendations">
         </section>
         <section id="try-again">
-            <a href="https://gpt-cleaner-bot.onrender.com/gpt">
+            <a href="http://localhost:4888/gpt">
                 <button class="try-button"><b>Start again</b></button>
             </a> 
         </section>
@@ -239,7 +243,7 @@
             fithEle.style.display = 'none'
             sixthEle.style.display = 'none'
             seventhEle.style.display = 'none'
-            const res = await fetch ('https://gpt-cleaner-bot.onrender.com/chat', {
+            const res = await fetch ('http://localhost:4888/chat', {
                method: 'POST',
                headers : {
                     'Content-Type': 'application/json'
