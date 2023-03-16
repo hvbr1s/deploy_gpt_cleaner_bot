@@ -4,7 +4,8 @@
 	<meta charset="UTF-8">
 	<title>CS Bot &#129302;</title>
 	<!-- Link to the Open Sans font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 	<style>
 		/* Apply the font and background color styles to the body element */
 		body {
@@ -12,8 +13,9 @@
             flex-direction: column;
             font-family: "Open Sans", sans-serif;
 			background-color: #0d0d0d;
-            color: white;
+            color: orange;
             padding: 12px;
+            font-family: 'Press Start 2P', cursive;
 		}
 
         header{
@@ -58,11 +60,12 @@
             padding: 8px 16px;
             border-radius: 5px;
             cursor: pointer;
+            color: white;
         }
 
         main section div:hover {
 
-            border-color: plum;
+            border-color: white;
 
         }
 
@@ -100,6 +103,7 @@
         box-shadow: 2px 2px 0 0 black,
         4px 4px 0 0 white;
         transition-duration: 200ms;
+        font-family: 'Press Start 2P', cursive;
 
         }
 
@@ -243,7 +247,7 @@
             fithEle.style.display = 'none'
             sixthEle.style.display = 'none'
             seventhEle.style.display = 'none'
-            const res = await fetch ('https://gpt-cleaner-bot.onrender.com/chat', {
+            const res = await fetch ('http://https://gpt-cleaner-bot.onrender.com/chat', {
                method: 'POST',
                headers : {
                     'Content-Type': 'application/json'
