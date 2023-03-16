@@ -19,22 +19,27 @@
       background: rgb(210, 207, 210);
       color: rgb(7, 7, 7);         
       cursor: pointer;
-      border: 1px solid rgb(7, 7, 7);
+      border: 2px solid rgb(7, 7, 7);
       border-radius: 5px;
       padding: 8px 16px;
+      box-shadow: 2px 2px 0 0 black,
+      4px 4px 0 0 white;
+      transition-duration: 200ms;
+
       }
 
       button:hover {
 
-      background: orange;
-      border: 1px solid white;
+      box-shadow: 3px 3px black, 6px 6px 0 0 white;
+      transform: translate(-2px, 2px);
       }
 
   </style>
   <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </head>
 <body>
-  <p>Welcome <span id="wallet-address"></span></p>
+  <p><b>Welcome</b> &#128075; <span id="wallet-address"></span></p>
+  
   <button id="connectWallet"><b>Connect</b></button>
   <button id="chat"><b>Take me to chat</b></button>
 
@@ -63,7 +68,7 @@
       .then(function(response) {
       })
       .then(function() {
-      window.location.href = 'https://gpt-cleaner-bot.onrender.com/gpt';
+      window.location.href = 'http://localhost:4888/gpt';
       }) 
     };
 
