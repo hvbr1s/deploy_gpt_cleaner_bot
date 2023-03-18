@@ -148,6 +148,21 @@
         border: 1px solid white;
         }
 
+        input[type="text"] {
+
+        background-color: #444; 
+        color: rgb(231, 224, 224); 
+        border: none;
+        padding: 8px;
+        border-radius: 4px;
+        }
+
+
+        input[type="text"]:focus {
+        background-color: #666; 
+        outline: none;
+        }
+
 
 	</style>
 </head>
@@ -155,16 +170,16 @@
 
     <header>
 
-        <h1>Beep Boop, I am Emailooor bot&#129302;</h1>
+        <h1>*Beep Boop* I am Emailooor bot&#129302;</h1>
         <h2 id="job">Here to fix your email &#128295;</h2>
 
     </header>
 	<main>
-        <section id="tada">&#128076;</section>
+        <section id="tada">&#9989;</section>
         <section id="first">
 
             <label for="email-input">Let's begin, paste your email below &#128071;</label>
-            <textarea id="email-input" rows="25" cols="50"></textarea>
+            <textarea type="text" id="email-input" rows="25" cols="50"></textarea>
             <button id="btn"><b>Fix</b></button>
 
         </section>
@@ -182,7 +197,7 @@
         <section id="recommendations">
         </section>
         <section id="try-again">
-            <a href="http://https://gpt-cleaner-bot.onrender.com/gpt">
+            <a href="http://localhost:4888/gpt">
                 <button class="try-button"><b>Start again</b></button>
             </a> 
         </section>
@@ -247,7 +262,7 @@
             fithEle.style.display = 'none'
             sixthEle.style.display = 'none'
             seventhEle.style.display = 'none'
-            const res = await fetch ('http://https://gpt-cleaner-bot.onrender.com/chat', {
+            const res = await fetch ('http://localhost:4888/chat', {
                method: 'POST',
                headers : {
                     'Content-Type': 'application/json'
