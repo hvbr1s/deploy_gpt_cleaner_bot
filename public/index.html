@@ -171,13 +171,13 @@
         }
 
         #server-response-container {
-            background-color: #444; 
+            background-color: #444 !important; 
             color: black;
             border: 1px solid white;
             border-radius: 5px;
             padding: 8px 16px;
             display: none;
-            font-family: "Open Sans", sans-serif;
+            font-family: Arial, sans-serif !important;
         }
 
         #server-response {
@@ -191,7 +191,7 @@
 
     <header>
 
-        <h1>Translator Bot&#129302;</h1>
+        <h1>Language Bot&#129299;</h1>
         <h2 id="job"></h2>
         
 
@@ -200,19 +200,19 @@
         <section id="tada">&#9989;</section>
         <section id="first">
 
-            <label for="email-input">First, paste your email &#128071;</label>
+            <label for="email-input">Paste your email &#128071;</label>
             <textarea type="text" id="email-input" rows="25" cols="50"></textarea>
             <button id="btn"><b>Continue</b></button>
 
         </section>
         <section id="second">
-            <p>Translate to:</p>
+            <p>Translate or proofread to:</p>
             <div onclick="selectTone('English')">English</div>
             <div onclick="selectTone('French')">French</div>
             <div onclick="selectTone('Spanish')">Spanish</div>
             <div onclick="selectTone('Chinese')">Chinese</div>
             <div onclick="selectTone('Russian')">Russian</div>
-            <span><b>Translate</b></span>
+            <span><b>Go!</b></span>
         </section>
         <section id="loading">
 
