@@ -42,7 +42,7 @@ app.get('/auth', async (req, res,) =>{
     if (balance > 0) {
       const token = uuidv4();
       res.cookie("authToken", token, { httpOnly: true, secure: true, sameSite: "strict" });
-      res.redirect("http://localhost:4888/gpt")
+      res.redirect("https://gpt-cleaner-bot.onrender.com/gpt")
     } else {
       res.send(`You don't have the required NFT!`);
     }    
@@ -54,7 +54,7 @@ app.get("/gpt", (req, res) => {
   if (authToken) {
     res.sendFile(path.join(__dirname, "public/index.html"));
   } else {
-    res.redirect("http://localhost:4888/");
+    res.redirect("https://gpt-cleaner-bot.onrender.com");
   }
 });
 
