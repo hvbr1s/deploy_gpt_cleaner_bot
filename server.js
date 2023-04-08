@@ -42,7 +42,7 @@ app.get('/auth', async (req, res,) =>{
     if (balance > 0) {
       const token = uuidv4();
       res.cookie("authToken", token, { httpOnly: true, secure: true, sameSite: "strict" });
-      res.redirect("https://gpt-cleaner-bot.onrender.com/gpt")
+      res.redirect("http://localhost:4888/gpt")
     } else {
       res.send(`You don't have the required NFT!`);
     }    
@@ -54,7 +54,7 @@ app.get("/gpt", (req, res) => {
   if (authToken) {
     res.sendFile(path.join(__dirname, "public/index.html"));
   } else {
-    res.redirect("https://gpt-cleaner-bot.onrender.com/");
+    res.redirect("http://localhost:4888/");
   }
 });
 
@@ -67,8 +67,8 @@ app.post("/chat", async (req, res)=> {
     model: "text-davinci-003",
     prompt: question,
     n: 1,
-    max_tokens: 100,
-    temperature: 1,
+    max_tokens: 1000,
+    temperature: 0.7,
   })
   const answer = chatResponse.data.choices[0].text.trim()
   res.status(200).send({ "response": answer })
@@ -76,7 +76,7 @@ app.post("/chat", async (req, res)=> {
 })
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT} and ready to receive requests.`);
+  console.log(`Server running at http://localhost:${PORT}/ and ready to receive requests.`);
 });
 
 const ADDRESS = "0xb022C9c672592c274397557556955eE968052969"
