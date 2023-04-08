@@ -7,13 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 	<style>
-		/* Apply the font and background color styles to the body element */
+		
 		body {
 			display: flex;
             flex-direction: column;
-            font-family: "Open Sans", sans-serif;
 			background-color: #0d0d0d;
-            color: orange;
+            color: whitesmoke;
             padding: 12px;
             font-family: 'Press Start 2P', cursive;
 		}
@@ -113,23 +112,31 @@
         transform: translate(-2px, 2px);
         }
 
-        .try-button {
+        .try-button, span {
 
             text-align: center;
-            background: rgb(132, 136, 123);
+            background: grey;
             color: black;         
             cursor: pointer;
             border: 1px solid white;
             border-radius: 5px;
             padding: 8px 16px;
-        }
-
-        try-button:hover{
-
-            background: transparent;
-            border: 1px solid white;
+            font-family: 'Press Start 2P', cursive;
+            box-shadow: 2px 2px 0 0 black,
+            4px 4px 0 0 white;
+            transition-duration: 200ms;
 
         }
+
+        span:hover {
+
+        background: transparent;
+        border: 1px solid white;
+        box-shadow: 3px 3px black, 6px 6px 0 0 white;
+        transform: translate(-2px, 2px);
+
+        }
+
 
         span {
 
@@ -163,6 +170,20 @@
         outline: none;
         }
 
+        #server-response-container {
+            background-color: #444; 
+            color: black;
+            border: 1px solid white;
+            border-radius: 5px;
+            padding: 8px 16px;
+            display: none;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        #server-response {
+            margin: 0;
+        }
+
 
 	</style>
 </head>
@@ -170,24 +191,28 @@
 
     <header>
 
-        <h1>*Beep Boop* I am Emailooor bot&#129302;</h1>
-        <h2 id="job">Here to fix your email &#128295;</h2>
+        <h1>Translator Bot&#129302;</h1>
+        <h2 id="job"></h2>
+        
 
     </header>
 	<main>
         <section id="tada">&#9989;</section>
         <section id="first">
 
-            <label for="email-input">Let's begin, paste your email below &#128071;</label>
+            <label for="email-input">First, paste your email &#128071;</label>
             <textarea type="text" id="email-input" rows="25" cols="50"></textarea>
-            <button id="btn"><b>Fix</b></button>
+            <button id="btn"><b>Continue</b></button>
 
         </section>
         <section id="second">
-            <p>I want my email to sound:</p>
-            <div onclick="selectTone('Friendly')">Friendly</div>
-            <div onclick="selectTone('Formal')">Formal</div>
-            <span><b>Generate</b></span>
+            <p>Translate to:</p>
+            <div onclick="selectTone('English')">English</div>
+            <div onclick="selectTone('French')">French</div>
+            <div onclick="selectTone('Spanish')">Spanish</div>
+            <div onclick="selectTone('Chinese')">Chinese</div>
+            <div onclick="selectTone('Russian')">Russian</div>
+            <span><b>Translate</b></span>
         </section>
         <section id="loading">
 
@@ -195,13 +220,21 @@
 
         </section>           
         <section id="recommendations">
-        </section>
-        <section id="try-again">
-            <a href="https://gpt-cleaner-bot.onrender.com/gpt">
+            <div id="server-response-container">
+              <p id="server-response"></p>
+            </div>
+          </section>
+
+          <section id="try-again">
+            <a href="http://localhost:4888/gpt">
                 <button class="try-button"><b>Start again</b></button>
             </a> 
         </section>
-        <section id="copied"><p><i>Copied to clipboard!</i>&#128203;</p></section>
+
+
+        <section id="copied">
+            <button onclick="copyToClipboard()">Copy to Clipboard</button>
+          </section>
     </main>
 </body>
 <script>
@@ -217,7 +250,6 @@
     submit.addEventListener('click', generateAnswer)
     const fithEle = document.getElementById('try-again')
     const sixthEle = document.getElementById('copied')
-    const seventhEle = document.getElementById('job')
     const eightEle = document.getElementById('tada')
     fithEle.style.display = 'none'
     sixthEle.style.display = 'none'
@@ -252,42 +284,46 @@
         })
     }
 
+    function copyToClipboard() {
+        const text = document.getElementById('server-response').textContent;
+        navigator.clipboard.writeText(text);
+        sixthEle.style.display = 'flex';
+    }
 
     async function generateAnswer(){
-        let request = `Hi chat, could you please correct the following email: "${emails}". Please make it sound more ${tones} and correct the grammar, spelling and style so it sounds like something a customer service agent might write, thanks!`
-        console.log(request)
-        try {
-            secondEle.style.display = 'none'
-            thirdEle.style.display = 'flex'
-            fithEle.style.display = 'none'
-            sixthEle.style.display = 'none'
-            seventhEle.style.display = 'none'
-            const res = await fetch ('https://gpt-cleaner-bot.onrender.com/chat', {
-               method: 'POST',
-               headers : {
-                    'Content-Type': 'application/json'
-                },
-                body : JSON.stringify({'question': request})
+    let request = `Hi chat, could you please translate to ${tones[tones.length - 1]} the following email: "${emails}". Please make it sound friendly but professional and correct the grammar, spelling and style so it sounds like something a customer service agent who speak the target language natively might write, thanks!`
+    console.log(request)
+    try {
+        secondEle.style.display = 'none'
+        thirdEle.style.display = 'flex'
+        fithEle.style.display = 'none'
+        sixthEle.style.display = 'none'
+        const res = await fetch ('http://localhost:4888/chat', {
+           method: 'POST',
+           headers : {
+                'Content-Type': 'application/json'
+            },
+            body : JSON.stringify({'question': request})
 
-            })
+        })
 
-            const { response } = await res.json()
-            thirdEle.style.display = 'none'
-            fourthEle.innerHTML = `<p>${response}</p>`;
-            fourthEle.style.display = 'flex'
-            fithEle.style.display = 'flex'
-            sixthEle.style.display = 'flex'
-            seventhEle.style.display = 'none'
-            eightEle.style.display = 'flex'
-            navigator.clipboard.writeText(response)
-            console.log(response)
-            
-    
-        } catch (err) {
-            console.log(err.question)
-        }
-        
-    }
+        const { response } = await res.json()
+        thirdEle.style.display = 'none'
+        fourthEle.innerHTML = `<p>${response}</p>`;
+        fourthEle.style.display = 'flex'
+        fithEle.style.display = 'flex'
+        sixthEle.style.display = 'flex'
+        eightEle.style.display = 'flex'
+        document.getElementById('server-response').textContent = response;
+        document.getElementById('server-response-container').style.display = 'block';
+        navigator.clipboard.writeText(response);
+        console.log(response)
+
+    } catch (err) {
+        console.log(err.question)
+    }        
+}
+
 
 </script>
 </html>
