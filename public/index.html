@@ -184,16 +184,19 @@
         #server-response {
             margin: 0;
         }
-	
-	#try-again {
+
+        #try-again {
 		display: flex;
 		justify-content: center;
-	 }
+	     }
+
 
         #try-again a {
             display: flex;
             justify-content: center;
         }
+
+
 
 	</style>
 </head>
@@ -234,7 +237,7 @@
                 <p id="server-response"></p>
             </div>
             <section id="try-again">
-                <a href="http://localhost:4888/gpt">
+                <a href="https://gpt-cleaner-bot.onrender.com/gpt">
                     <button class="try-button"><b>Start again</b></button>
                 </a> 
             </section>
@@ -300,6 +303,7 @@
 
     async function generateAnswer(){
     let request = `
+    You are a skilled customer service representative for Ledger with exceptional writing and translation abilities, proficient in multiple languages.
     Please help me translate the following email into ${tones[tones.length - 1]}: "${emails}".
     Ensure the translation is both professional and friendly, with accurate grammar and spelling, in a manner that would be consistent with a native speaker of ${tones}.
     If the provided email is already written in ${tones[tones.length - 1]}please enhance and elaborate on the ideas to ensure the tone is both professional and friendly, similar to what a customer service representative would write. 
