@@ -170,19 +170,21 @@
         outline: none;
         }
 
+
         #server-response-container {
-            background-color: #444 !important; 
+            background-color: #e0e0e0;
             color: black;
             border: 1px solid white;
             border-radius: 5px;
             padding: 8px 16px;
-            display: none;
             font-family: Arial, sans-serif !important;
         }
+
 
         #server-response {
             margin: 0;
         }
+
 
 
 	</style>
@@ -221,16 +223,14 @@
         </section>           
         <section id="recommendations">
             <div id="server-response-container">
-              <p id="server-response"></p>
+                <p id="server-response"></p>
             </div>
-          </section>
-
-          <section id="try-again">
-            <a href="https://gpt-cleaner-bot.onrender.com/gpt">
-                <button class="try-button"><b>Start again</b></button>
-            </a> 
+            <section id="try-again">
+                <a href="http://localhost:4888/gpt">
+                    <button class="try-button"><b>Start again</b></button>
+                </a> 
+            </section>
         </section>
-
 
         <section id="copied">
             <button onclick="copyToClipboard()">Copy to Clipboard</button>
@@ -296,6 +296,7 @@
     Ensure the translation is both professional and friendly, with accurate grammar and spelling, in a manner that would be consistent with a native speaker of ${tones}.
     If the provided email is already written in ${tones[tones.length - 1]}please enhance and elaborate on the ideas to ensure the tone is both professional and friendly, similar to what a customer service representative would write. 
     Additionally, make sure the grammar and spelling are accurate, so that it aligns with the writing style of a native speaker of ${tones}.
+    Make sure your response only includes the text, don't add any notes or explanations.
     `
     console.log(request)
     try {
@@ -314,13 +315,12 @@
 
         const { response } = await res.json()
         thirdEle.style.display = 'none'
-        fourthEle.innerHTML = `<p>${response}</p>`;
+        document.getElementById('server-response').textContent = response;
+        document.getElementById('server-response-container').style.display = 'block';
         fourthEle.style.display = 'flex'
         fithEle.style.display = 'flex'
         sixthEle.style.display = 'flex'
         eightEle.style.display = 'flex'
-        document.getElementById('server-response').textContent = response;
-        document.getElementById('server-response-container').style.display = 'block';
         navigator.clipboard.writeText(response);
         console.log(response)
 
