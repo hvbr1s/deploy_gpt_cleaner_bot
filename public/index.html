@@ -226,7 +226,7 @@
           </section>
 
           <section id="try-again">
-            <a href="https://gpt-cleaner-bot.onrender.com/gpt">
+            <a href="http://localhost:4888/gpt">
                 <button class="try-button"><b>Start again</b></button>
             </a> 
         </section>
@@ -291,14 +291,19 @@
     }
 
     async function generateAnswer(){
-    let request = `Hi chat, could you please translate to ${tones[tones.length - 1]} the following email: "${emails}". Please make it sound friendly but professional and correct the grammar, spelling and style so it sounds like something a customer service agent who speak the target language natively might write, thanks!`
+    let request = `
+    Please help me translate the following email into ${tones[tones.length - 1]}: "${emails}".
+    Ensure the translation is both professional and friendly, with accurate grammar and spelling, in a manner that would be consistent with a native speaker of ${tones}.
+    If the provided email is already written in ${tones[tones.length - 1]}please enhance and elaborate on the ideas to ensure the tone is both professional and friendly, similar to what a customer service representative would write. 
+    Additionally, make sure the grammar and spelling are accurate, so that it aligns with the writing style of a native speaker of ${tones}.
+    `
     console.log(request)
     try {
         secondEle.style.display = 'none'
         thirdEle.style.display = 'flex'
         fithEle.style.display = 'none'
         sixthEle.style.display = 'none'
-        const res = await fetch ('https://gpt-cleaner-bot.onrender.com/chat', {
+        const res = await fetch ('http://localhost:4888/chat', {
            method: 'POST',
            headers : {
                 'Content-Type': 'application/json'
