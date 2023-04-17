@@ -5,18 +5,21 @@ require('dotenv').config()
 import cookieParser from 'cookie-parser';
 import path from 'path';
 const __dirname = path.resolve();
-const Web3 = require('web3')
-const Contract = require('web3-eth-contract')
-const express = require("express");
-const { Configuration, OpenAIApi } = require("openai");
-const OPENAI_API_KEY = process.env.SECRET_API_KEY
-const configuration = new Configuration({
-  apiKey: OPENAI_API_KEY,
- });
+import Web3 from "web3";
+import Contract from "web3-eth-contract";
+import express from "express";
+import { Configuration, OpenAIApi } from "openai";
 const PORT = 4888
 
-// init chat gpt
+const configuration = new Configuration({
+    organization: process.env.ORGANIZATION ,
+    apiKey: process.env.SECRET_API_KEY,
+});
+
+
 const openai = new OpenAIApi(configuration);
+
+
 const app = express();
 
 //init web 3
@@ -25,6 +28,19 @@ const web3 = new Web3("https://rpc-mumbai.maticvigil.com/")
 // middleware
 app.use(cookieParser());
 app.use(express.json()) 
+
+function safeStringify(obj) {
+  const cache = new Set();
+  return JSON.stringify(obj, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (cache.has(value)) {
+        return; // Omit circular references
+      }
+      cache.add(value);
+    }
+    return value;
+  });
+}
 
 
 app.get('/' , (req, res) => {
@@ -59,21 +75,26 @@ app.get("/gpt", (req, res) => {
 });
 
 
-app.post("/chat", async (req, res)=> {
+app.post("/chat", async (req, res) => {
+  const { question } = req.body;
+  console.log(question);
+  try {
+    let chatResponse = await openai.createChatCompletion({
+      "model": "gpt-3.5-turbo",
+      "messages": 
+        [{ "role": "user","content": question }]
+      ,
+    });
 
-  const { question } = req.body
-  console.log(question)
-  let chatResponse = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: question,
-    n: 1,
-    max_tokens: 1000,
-    temperature: 0.7,
-  })
-  const answer = chatResponse.data.choices[0].text.trim()
-  res.status(200).send({ "response": answer })
-  console.log(answer)
-})
+    const answer = chatResponse.data.choices[0].message.content;
+    res.status(200).send({ response: answer });
+    console.log(answer);
+  } catch (error) {
+    console.error("Error during chat completion:", error);
+    res.status(500).send({ error: "Error during chat completion" });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/ and ready to receive requests.`);
