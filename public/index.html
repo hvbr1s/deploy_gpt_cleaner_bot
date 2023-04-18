@@ -303,12 +303,21 @@
 
     async function generateAnswer(){
     let request = `
-    You are a skilled customer service representative for Ledger with exceptional writing and translation abilities, proficient in multiple languages.
-    Please help me translate the following email into ${tones[tones.length - 1]}: "${emails}".
-    Ensure the translation is both professional and friendly but not too formal, with accurate grammar and spelling, in a manner that would be consistent with a native speaker of ${tones}.
-    If the provided email is already written in ${tones[tones.length - 1]} please enhance and elaborate on the ideas to ensure the tone is both professional and friendly but not too formal, similar to what a customer service representative who speaks native would write. 
-    Additionally, make sure the grammar and spelling are accurate, so that it aligns with the writing style of a native speaker of ${tones}.
-    Make sure your response only includes the text, don't add any notes or explanations.
+    
+    Your task is to transform the provided rough draft into a polished email. 
+
+    The tone of the final draft should be friendly and semi-casual without being informal.
+
+    Additionally, ensure the grammar and spelling are accurate, reflecting the writing style of a native speaker of ${tones[tones.length - 1]}.
+
+    Here's the draft:
+
+    "${emails}"
+
+    If the provided draft is not in ${tones[tones.length - 1]}, please translate it into ${tones[tones.length - 1]}, capturing the style of a native speaker of ${tones[tones.length - 1]}.
+
+    In your response, include only the translated or enhanced final draft, without any additional notes or explanations."
+    
     `
     console.log(request)
     try {
